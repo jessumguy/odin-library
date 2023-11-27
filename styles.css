@@ -1,0 +1,18 @@
+/* root */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/*  */
+
+#bookshelf_table {
+    border: 1px green solid;
+}
+
+tr, th, td {
+    border: 1px red solid;
+}
