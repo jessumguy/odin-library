@@ -11,7 +11,7 @@
         <section id="header_top">
             <h1>Bookshelf</h1>
             <ul>
-                <li><a href="" title="My GitHub" class="url">My Humble GitHub</li>
+                <li><a href="" title="My GitHub" class="url">My Humble GitHub</a></li>
             </ul>
         </section>
         <section id="header_bottom">
@@ -29,8 +29,22 @@
     </header>
     <main>
         <section id="main_top">
-            <button id="add_book_button">Add Book</button>
-            <button id="remove_book_button">Remove Book</button>
+            <form action="">
+                <label for="book_title">Title</label>
+                <input type="text" id="book_title" name="book_title">
+                <label for="book_author">Author</label>
+                <input type="text" id="book_author" name="book_author">
+                <label for="book_pages">Pages</label>
+                <input type="number" id="book_pages" name="book_pages">
+                <label for="book_read">Read (Y/N)</label>
+                <input type="text" name="book_read" id="book_read" list="read_options">
+                    <datalist id="read_options">
+                        <option value="Yes"></option>
+                        <option value="No"></option>
+                    </datalist>
+                <input type="button" value="Add New Book" id="add_new_book_button"></button>
+            </form>                
+                <button id="remove_book_button">Remove Book</button>
         </section>
         <section id="main_botom">
             <table id="bookshelf_table">
@@ -45,6 +59,6 @@
             </table>
         </section>
     </main>
-    <script src="scripts.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
