@@ -1,11 +1,3 @@
-if (typeof document !== 'undefined') {
-    const bookshelfTable = document.querySelector("#bookshelf_table");
-    
-
-}
-
-
-
 const myLibrary = [
     { 
         title: "The Hobbit",
@@ -29,22 +21,29 @@ function addBookToLibrary() {
     myLibrary.push(newBook)
 }
 
+const bookshelfTable = document.querySelector("#bookshelf_table");
+
+
 function renderPage() {
     myLibrary.forEach((book) => {
         const bookHTML = 
         `
             <tr>
                 <td>${book.title}</td>
+                <td>${book.author}</td>
+                <td>${book.pages}</td>
+                <td>${book.read}</td>
+                <td><button id="edit-book-row">Edit</button></td>
+                <td><button id="delete-book-row">Delete</button></td>
             </tr>
         `;
-        bookshelfTable.insertAdjacentHTML("afterend", bookHTML);
+        bookshelfTable.insertAdjacentHTML("beforeend", bookHTML);
     });
 }
 
 renderPage();
 
 console.log(myLibrary);
-
 
  
 // console.log(myLibrary);
