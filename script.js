@@ -1,3 +1,5 @@
+// Books stored in myLibrary Array
+
 const myLibrary = [
     { 
         title: "The Hobbit",
@@ -9,6 +11,21 @@ const myLibrary = [
     { title: "One Man's View of the World", author: "Lee Kwan Yew", pages: 348, read: "Yes" }
 ];
 
+// HTML Elements
+
+const bookshelfTable = document.querySelector("#bookshelf_table");
+const bookTitle = document.querySelector("#book_title");
+const bookAuthor = document.querySelector("#book_author");
+const bookPages = document.querySelector("#book_pages");
+const bookReadStatus = document.querySelector("#book_read");
+const addNewBookButton = document.querySelector("#add_new_book_button").addEventListener("click", (e) => {
+    addBookToLibrary();
+    renderPage();
+    console.log('Add New Book')
+});
+
+// Book Object
+
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -16,15 +33,18 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
+// Creates new Book Object and adds it to myLibrary Array 
+
 function addBookToLibrary() {
-    const newBook = new Book(`${title}`, `${author}`, `${pages}`, `${read}`)
+    const newBook = new Book(`${bookTitle.value}`, `${bookAuthor.value}`, `${bookPages.value}`, `${bookReadStatus.value}`)
     myLibrary.push(newBook)
 }
 
-const bookshelfTable = document.querySelector("#bookshelf_table");
-
+// Renders the Page
 
 function renderPage() {
+    bookshelfTable.innerHTML = "";
+
     myLibrary.forEach((book) => {
         const bookHTML = 
         `
