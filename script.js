@@ -18,18 +18,26 @@ let myLibrary = [
 // HTML Elements
 
 const bookshelfTable = document.querySelector("#bookshelf_table");
-const bookTitle = document.querySelector("#book_title");
-const bookAuthor = document.querySelector("#book_author");
-const bookPages = document.querySelector("#book_pages");
-const bookReadStatus = document.querySelector("#book_read");
-
+const bookTitleInput = document.querySelector("#book_title_input");
+const bookAuthorInput = document.querySelector("#book_author_input");
+const bookPagesInput = document.querySelector("#book_pages_input");
+const bookReadStatusInput = document.querySelector("#book_read_input");
 const addNewBookButton = document.querySelector("#add_new_book_button").addEventListener("click", (e) => {
     addBookToLibrary();
     renderPage();
-    console.log("Added New Book!")
 });
+const booksOwnedCounter = document.querySelector("#books_owned_count");
+const booksReadCounter = document.querySelector("#books_read_count");
 
-// Book Object
+function checkBooksReadCount() {
+    const booksReadCount = myLibrary.reduce((count, { read: key }) => 
+    (count[key] = (count[key] || 0) + 1, count), {});
+
+    // console.log(booksReadCount)
+    return booksReadCount.Yes !== undefined ? booksReadCount.Yes : 0;
+}
+
+// Books Object
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -41,38 +49,37 @@ function Book(title, author, pages, read) {
 // Creates new Book Object and adds it to myLibrary Array
 
 function addBookToLibrary() {
-    const newBook = new Book(`${bookTitle.value}`, `${bookAuthor.value}`, `${bookPages.value}`, `${bookReadStatus.value}`)
+    const newBook = new Book(`${bookTitleInput.value}`, `${bookAuthorInput.value}`, `${bookPagesInput.value}`, `${bookReadStatusInput.value}`)
     myLibrary.push(newBook)
+    
+    console.log(myLibrary);
+    console.log(`Added Book: ${bookTitleInput.value}`);
+
+    return myLibrary;
 }
 
 // Remove row from table
 
 function deleteRow(rowNo) {
     const tableRow = document.getElementById(rowNo);
-    tableRow.parentNode.removeChild(tableRow);
-    console.log("Deleted Book from Row!")
+    tableRow.parentNode.remove();
+
+    const bookTitle = tableRow.getAttribute("data-title");
+    console.log(`Deleted Book: ${tableRow.getAttribute("data-title")}`)
     
-    removeBookFromMyLibraryArray();
-}
-
-// Remove Book from myLibrary Array https://stackoverflow.com/questions/66728040/how-to-associate-object-with-dom-element-in-plain-javascript
-
-function removeBookFromMyLibraryArray(i) {
-    myLibrary.splice(myLibrary.indexOf(myLibrary[i]), 1);
-    console.log(myLibrary);
-    console.log(i)
+    myLibrary = myLibrary.filter((book) => book.title !== bookTitle);
+    booksOwnedCounter.innerText = myLibrary.length;
+    booksReadCounter.innerText = checkBooksReadCount();
 }
 
 // Renders the Page
 
 function renderPage() {
-    // bookshelfTable.innerHTML = "";
-
     if (initialPageRender === false) {
         myLibrary.forEach((book) => {
             const defaultBooks = 
             `
-                <tr id="row-${rowNo}">
+                <tr id="row-${rowNo}" data-title="${book.title}">
                     <td>${book.title}</td>
                     <td>${book.author}</td>
                     <td>${book.pages}</td>
@@ -90,11 +97,11 @@ function renderPage() {
     } else {
         const newBookToBeAdded = 
         `
-            <tr id="row-${rowNo}">
-                <td>${bookTitle.value}</td>
-                <td>${bookAuthor.value}</td>
-                <td>${bookPages.value}</td>
-                <td>${bookReadStatus.value}</td>
+            <tr id="row-${rowNo}" data-title="${bookTitleInput.value}">
+                <td>${bookTitleInput.value}</td>
+                <td>${bookAuthorInput.value}</td>
+                <td>${bookPagesInput.value}</td>
+                <td>${bookReadStatusInput.value}</td>
                 <td><button id="edit-book-row">Edit</button></td>
                 <td><button id="delete-book-row-${rowNo}" onclick="deleteRow('row-${rowNo}')">Delete</button></td>
             </tr>
@@ -103,24 +110,11 @@ function renderPage() {
 
         rowNo++
     }
+
+    booksOwnedCounter.innerText = myLibrary.length;
+    booksReadCounter.innerText = checkBooksReadCount()
 }
 
 renderPage();
 
 console.log(myLibrary);
-
- 
-// console.log(myLibrary);
-// let anotherBook = {title: 'Book1', author: 'jim', pages: 5, read: 'yes'}
-// myLibrary.push(anotherBook)
-// console.log(myLibrary)
-
-// console.log(myLibrary[1].title)
-
-// myLibrary.push(new Book('Book 999', 'BOB', 10, 'ok'))
-// console.log(myLibrary)
-
-// myLibrary.pop()
-// myLibrary.shift()
-// console.log(myLibrary)
-// console.log(myLibrary[0].author)
